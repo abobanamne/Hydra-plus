@@ -1,3 +1,8 @@
+# ATTENTION:
+This is fork of [original](https://github.com/MrDiamond64/Hydra) Hydra for my experimental purposes.
+
+If you are looking for stable version, better go get MrDiamond64's version.
+
 # Hydra
 <div align="center">
   <img src="https://github.com/MrDiamond64/Hydra/blob/main/img/main.png?raw=true" alt="A screenshot showing the Hydra Players UI"/>
