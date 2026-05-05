@@ -1,5 +1,4 @@
-﻿using AmongUs.GameOptions;
-using HarmonyLib;
+﻿using HarmonyLib;
 using UnityEngine;
 
 namespace HydraMenu.features

@@ -242,6 +242,21 @@ namespace HydraMenu
 			}
 		}
 
+		public static bool IsSabotageActive(SystemTypes system)
+		{
+			ShipStatus.Instance.Systems.TryGetValue(system, out ISystemType systemType);
+			if(systemType == null) return false;
+
+			IActivatable activableSystem = systemType.TryCast<IActivatable>();
+			if(activableSystem == null)
+			{
+				Hydra.Log.LogError($"All sabotage types should extend from IActivatable, but yet {system} doesn't");
+				return false;
+			}
+
+			return activableSystem.IsActive;
+		}
+
 		public static void LockDoor(SystemTypes door)
 		{
 			ShipStatus.Instance.RpcCloseDoorsOfType(door);

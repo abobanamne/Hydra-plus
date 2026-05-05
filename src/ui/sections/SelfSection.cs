@@ -1,4 +1,6 @@
-﻿using HydraMenu.features;
+﻿using BepInEx.Unity.IL2CPP.Utils.Collections;
+using HydraMenu.features;
+using System.Collections;
 using UnityEngine;
 
 namespace HydraMenu.ui.sections
@@ -39,6 +41,11 @@ namespace HydraMenu.ui.sections
 				{
 					PlayerControl.LocalPlayer.CmdReportDeadBody(null);
 				}
+			}
+
+			if(GUILayout.Button("Complete All Tasks"))
+			{
+				PlayerControl.LocalPlayer.StartCoroutine(CompleteAllTasks().WrapToIl2Cpp());
 			}
 
 			if(GUILayout.Button("Randomize Avatar"))
@@ -96,6 +103,30 @@ namespace HydraMenu.ui.sections
 				PlayerControl.LocalPlayer.RpcSetLevel(level);
 				Hydra.notifications.Send("Level Updater", $"Your level has been changed to {level + 1}", 5);
 			}
+		}
+
+		private IEnumerator CompleteAllTasks()
+		{
+			Il2CppSystem.Collections.Generic.List<PlayerTask> allTasks = PlayerControl.LocalPlayer.myTasks;
+
+			Hydra.Log.LogInfo("Completing all tasks...");
+			foreach(PlayerTask task in allTasks)
+			{
+				if(task.IsComplete)
+				{
+					Hydra.Log.LogInfo($"Task {task.Id} has already been completed, skipping");
+					continue;
+				}
+
+				Hydra.Log.LogInfo($"Sent CompleteTask RPC for task {task.Id}");
+				PlayerControl.LocalPlayer.RpcCompleteTask(task.Id);
+
+				// If we want to complete more than six tasks then a delay needs to be implemented
+				// otherwise the vanilla anticheat will kick us for violating ratelimits
+				yield return Effects.Wait(0.05f);
+			}
+
+			Hydra.notifications.Send("Task Finisher", "All your tasks have been finished.", 5);
 		}
 	}
 }

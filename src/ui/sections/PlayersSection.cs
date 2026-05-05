@@ -179,7 +179,7 @@ namespace HydraMenu.ui.sections
 			}
 
 			GUILayout.Space(5);
-			GUILayout.Label("Host Only Features:" + (AmongUsClient.Instance.AmHost ? "" : "\n(Using these will get you banned!)"));
+			GUILayout.Label("Host Only Features:" + (AmongUsClient.Instance.AmHost ? "" : "\n(Using these will get you kicked!)"));
 
 			if(GUILayout.Button("Force Meeting As"))
 			{
@@ -228,28 +228,6 @@ namespace HydraMenu.ui.sections
 				target.StartCoroutine(AttemptShapeshiftFrame(target).WrapToIl2Cpp());
 			}
 
-			/*
-			GUILayout.BeginHorizontal();
-			if(GUILayout.Button("Frame Vanish"))
-			{
-				if(target.Data.RoleType != RoleTypes.Phantom) target.RpcSetRole(RoleTypes.Phantom, true);
-				target.CheckVanish();
-			}
-
-			if(GUILayout.Button("Frame Appear"))
-			{
-				if(target.Data.RoleType != RoleTypes.Phantom) target.RpcSetRole(RoleTypes.Phantom, true);
-				target.CheckAppear(true);
-			}
-
-			GUILayout.EndHorizontal();
-
-			if(GUILayout.Button("Start Scan"))
-			{
-				target.RpcSetScanner(true);
-			}
-			*/
-
 			GUILayout.BeginHorizontal();
 			if(GUILayout.Button("Flood Player with Tasks"))
 			{
@@ -257,7 +235,6 @@ namespace HydraMenu.ui.sections
 
 				for(byte i = 0; i < 255; i++)
 				{
-					// Is it maybe possible to get a random task from the entire task pool for the map instead of a random task whose ID ranges from 0 to 20?
 					taskIds[i] = i;
 				}
 
@@ -305,7 +282,7 @@ namespace HydraMenu.ui.sections
 			if(GUILayout.Button("Super Speed"))
 			{
 				IGameOptions gameOptions = GameOptions.CreateCloneOptions(GameManager.Instance.LogicOptions.currentGameOptions);
-				// We can't exceed 3.0x speed on Vanilla servers without getting banned
+				// The vanilla anticheat prevents us from being able to exceed speeds greater than 3.0f
 				gameOptions.SetFloat(FloatOptionNames.PlayerSpeedMod, 3.0f);
 
 				GameOptions.SendGameOptionsToClient(gameOptions, target.OwnerId);

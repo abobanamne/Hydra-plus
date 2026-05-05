@@ -11,6 +11,7 @@ namespace HydraMenu.anticheat.rpc
 			{
 				Anticheat.Flag(player, $"{player.Data.PlayerName} tried to vent when there is no instance of ShipStatus.");
 				blockRpc = true;
+				return;
 			}
 
 			// Check if the player vents if their role does not support venting (if they are not engineer or non-ghost imposter)
@@ -20,12 +21,14 @@ namespace HydraMenu.anticheat.rpc
 			{
 				Anticheat.Flag(player, $"{player.Data.PlayerName} tried to vent when their role ({player.Data.RoleType}) does not support venting.");
 				blockRpc = true;
+				return;
 			}
 
 			if(GameManager.Instance.IsHideAndSeek() && RoleManager.IsImpostorRole(player.Data.RoleType))
 			{
 				Anticheat.Flag(player, $"{player.Data.PlayerName} tried to vent while being the seeker.");
 				blockRpc = true;
+				return;
 			}
 		}
 

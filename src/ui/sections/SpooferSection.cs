@@ -15,7 +15,7 @@ namespace HydraMenu.ui.sections
 		public readonly Dictionary<string, int> versions = new Dictionary<string, int>()
 		{
 			// Current version at runtime
-			// VersionShower::Start uses ReferenceDataManager.Refdata.userFacingVersion to get version strings such as "17.1" however that doesn't seem to work at runtime, so we have to use Constants::AddressablesVersion to get a less human-understandable version string
+			// VersionShower::Start uses ReferenceDataManager.Refdata.userFacingVersion to get version strings such as "17.1" however that doesn't seem to before the game fully loads, so we have to use Constants::AddressablesVersion to get a less human-understandable version string
 			{ $"{Constants.AddressablesVersion} (Current)", Constants.GetBroadcastVersion() },
 			{ "16.1.0", 50632950 },
 			{ "17.1", 50643450 },

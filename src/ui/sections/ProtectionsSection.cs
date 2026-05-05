@@ -18,7 +18,7 @@ namespace HydraMenu.ui.sections
 			Protections.BlockServerTeleports.Enabled = GUILayout.Toggle(Protections.BlockServerTeleports.Enabled, "Block position updates from server");
 
 			// Overloads
-			Protections.HardenedReadPackedUInt.Enabled = GUILayout.Toggle(Protections.HardenedReadPackedUInt.Enabled, "Use hardened packet int deserializer");
+			Protections.HardenedReadPackedUInt.Enabled = GUILayout.Toggle(Protections.HardenedReadPackedUInt.Enabled, "Use hardened packed int deserializer");
 			Protections.BlockInvalidVentOverload = GUILayout.Toggle(Protections.BlockInvalidVentOverload, "Protect against invalid vent overload");
 			Protections.BlockInvalidLadderOverload = GUILayout.Toggle(Protections.BlockInvalidLadderOverload, "Protect against invalid ladder overload");
 

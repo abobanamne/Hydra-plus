@@ -45,6 +45,12 @@ namespace HydraMenu.anticheat.rpc
 					ValidateMushroomMixupSystem(player, reader, ref blockRpc);
 					break;
 
+				case SystemTypes.Reactor:
+				case SystemTypes.Laboratory:
+				case SystemTypes.HeliSabotage:
+					ValidateReactorSystem(player, reader, ref blockRpc);
+					break;
+
 				case SystemTypes.Sabotage:
 					ValidateSabotageSystem(player, reader, ref blockRpc);
 					break;
@@ -58,6 +64,22 @@ namespace HydraMenu.anticheat.rpc
 
 			Anticheat.Flag(player, $"{player.Data.PlayerName} attempted to update Mushroom Mixup system with operation {operation}.");
 			blockRpc = true;
+		}
+
+		private static void ValidateReactorSystem(PlayerControl player, MessageReader reader, ref bool blockRpc)
+		{
+			byte operation = reader.ReadByte();
+
+			if(operation == 16)
+			{
+				Anticheat.Flag(player, $"{player.Data.PlayerName} attempted to forcefully fix the Reactor sabotage");
+				blockRpc = true;
+			}
+			else if(operation == 128)
+			{
+				Anticheat.Flag(player, $"{player.Data.PlayerName} attempted to force call the Reactor sabotage");
+				blockRpc = true;
+			}
 		}
 
 		private static void ValidateSabotageSystem(PlayerControl player, MessageReader reader, ref bool blockRpc)
@@ -107,6 +129,14 @@ namespace HydraMenu.anticheat.rpc
 			if(system.ExpectedSwitches == system.ActualSwitches)
 			{
 				Hydra.Log.LogInfo($"Blocked switch update from {player.Data.PlayerName} as lights are not currently sabotaged");
+				blockRpc = true;
+			}
+
+			// False positives may be possible if a player is toggling light switches before their client recieves the StartMeeting RPC so we silent flag
+			// Maybe we can check too see what state the meeting is in, and if its after the meeting was animated then flag the player?
+			if(MeetingHud.Instance)
+			{
+				Hydra.Log.LogInfo($"Blocked switch update from {player.Data.PlayerName} as there is a currently active meeting");
 				blockRpc = true;
 			}
 		}

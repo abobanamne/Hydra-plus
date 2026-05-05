@@ -33,10 +33,11 @@ namespace HydraMenu.ui.sections
 			Host.DisableMeetings.Enabled = GUILayout.Toggle(Host.DisableMeetings.Enabled, "Disable Meetings");
 			Host.DisableSabotages.Enabled = GUILayout.Toggle(Host.DisableSabotages.Enabled, "Disable Sabotages");
 			Host.DisableCloseDoors.Enabled = GUILayout.Toggle(Host.DisableCloseDoors.Enabled, "Disable Close Doors");
+			Host.DisableCameras.Enabled = GUILayout.Toggle(Host.DisableCameras.Enabled, "Disable Security Cameras");
 			Host.DisableGameEnd.Enabled = GUILayout.Toggle(Host.DisableGameEnd.Enabled, "Disable Game End");
 
 			GUILayout.BeginHorizontal();
-			Host.BlockLowLevels.Enabled = GUILayout.Toggle(Host.BlockLowLevels.Enabled, $"Kick players whose level is less than {Host.BlockLowLevels.MinLevel}");
+			Host.BlockLowLevels.Enabled = GUILayout.Toggle(Host.BlockLowLevels.Enabled, $"Kick players with less than {Host.BlockLowLevels.MinLevel} levels");
 			Host.BlockLowLevels.MinLevel = (uint)GUILayout.HorizontalSlider(Host.BlockLowLevels.MinLevel, 0, 100);
 			GUILayout.EndHorizontal();
 
@@ -54,21 +55,6 @@ namespace HydraMenu.ui.sections
 					PlayerControl.LocalPlayer.RpcMurderPlayer(player, true);
 				}
 			}
-
-			/*
-			if(GUILayout.Button("Teleport Everyone to Me"))
-			{
-				Vector2 pos = PlayerControl.LocalPlayer.transform.position;
-				foreach(PlayerControl player in PlayerControl.AllPlayerControls)
-				{
-					if(player.PlayerId == PlayerControl.LocalPlayer.NetId) continue;
-
-					Network.SendSnapTo(player.NetTransform, pos);
-				}
-
-				Hydra.notifications.Send("Teleporter", "Everyone has been teleported to you!", 5);
-			}
-			*/
 
 			GUILayout.BeginHorizontal();
 			if(GUILayout.Button("Force Crewmate Victory") )
@@ -94,15 +80,6 @@ namespace HydraMenu.ui.sections
 			GUILayout.Label("Map Spawner/Despawner:");
 
 			GUILayout.BeginHorizontal();
-			if(GUILayout.Button("Spawn Lobby"))
-			{
-				// From GameStartManager::Start
-				LobbyBehaviour.Instance = Object.Instantiate<LobbyBehaviour>(GameStartManager.Instance.LobbyPrefab);
-				AmongUsClient.Instance.Spawn(LobbyBehaviour.Instance, -2, SpawnFlags.None);
-
-				Hydra.notifications.Send("Lobby Map", "A new instance of the lobby map has been spawned", 5);
-			}
-
 			if(GUILayout.Button("Despawn Lobby"))
 			{
 				if(LobbyBehaviour.Instance != null)
@@ -115,17 +92,21 @@ namespace HydraMenu.ui.sections
 					Hydra.notifications.Send("Lobby Map", "The lobby map has already been despawned.", 5);
 				}
 			}
+
+			if(GUILayout.Button("Spawn Lobby"))
+			{
+				// From GameStartManager::Start
+				LobbyBehaviour.Instance = Object.Instantiate<LobbyBehaviour>(GameStartManager.Instance.LobbyPrefab);
+				AmongUsClient.Instance.Spawn(LobbyBehaviour.Instance, -2, SpawnFlags.None);
+
+				Hydra.notifications.Send("Lobby Map", "A new instance of the lobby map has been spawned", 5);
+			}
 			GUILayout.EndHorizontal();
 
 			GUILayout.Label($"Selected map: {(MapNames)selectedMap}");
 			selectedMap = (byte)GUILayout.HorizontalSlider(selectedMap, 0, 5);
 
 			GUILayout.BeginHorizontal();
-			if(GUILayout.Button("Spawn Map"))
-			{
-				AmongUsClient.Instance.StartCoroutine(SpawnMap(selectedMap).WrapToIl2Cpp());
-			}
-
 			if(GUILayout.Button("Despawn Map"))
 			{
 				if(ShipStatus.Instance != null)
@@ -137,6 +118,11 @@ namespace HydraMenu.ui.sections
 				{
 					Hydra.notifications.Send("Game Map", "The game map has already been despawned.", 5);
 				}
+			}
+
+			if(GUILayout.Button("Spawn Map"))
+			{
+				AmongUsClient.Instance.StartCoroutine(SpawnMap(selectedMap).WrapToIl2Cpp());
 			}
 			GUILayout.EndHorizontal();
 

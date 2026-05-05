@@ -1,4 +1,5 @@
 ﻿using HarmonyLib;
+using Hazel;
 using InnerNet;
 using UnityEngine.AddressableAssets;
 
@@ -101,6 +102,43 @@ namespace HydraMenu.features
 
 				__result = __instance.AmHost;
 				return false;
+			}
+		}
+
+		// It is not possible to watch security cameras when the comms sabotage is active. We can abuse this to disable security cameras
+		// When a player starts to watch security cameras, sabotage comms for that player, when the player stops watching cameras, fix comms sabotage for that player
+		[HarmonyPatch(typeof(SecurityCameraSystemType), nameof(SecurityCameraSystemType.UpdateSystem))]
+		public static class DisableCameras
+		{
+			public static bool Enabled { get; set; } = false;
+
+			static void Postfix(PlayerControl player, MessageReader msgReader)
+			{
+				if(!Enabled || !AmongUsClient.Instance.AmHost || player.OwnerId == AmongUsClient.Instance.HostId) return;
+
+				// Prevent an exploit where if the comms sabotage is active, someone could enter and leave the security cameras to remove the comms effect from themselves
+				if(Sabotage.IsSabotageActive(SystemTypes.Comms))
+				{
+					// There is an edge case where if someone is on the security cameras panel when comms are actively sabotaged, and the sabotage is fixed,
+					// then the player will be able to watch the security cameras
+					// I don't think it is worthwhile to fix this edge case considering this feature is unlikely to even be used by anyone
+					Hydra.Log.LogMessage($"{player.Data.name} updated security cameras, we do not need to do anything as the Comms sabotage is already active");
+					return;
+				}
+
+				Hydra.Log.LogMessage($"{player.Data.PlayerName} updated security cameras, sending Comms system update");
+
+				msgReader.Position--;
+				// 1 = Player started to watch cameras, 2 (and every other value) = Player stopped watching cameras
+				byte operation = msgReader.ReadByte();
+
+				MessageWriter systemUpdate = MessageWriter.Get(SendOption.Reliable);
+				systemUpdate.StartMessage((byte)SystemTypes.Comms);
+				// 1 = Comms sabotage is active, 0 = Comms sabotage is inactive
+				systemUpdate.Write(operation == 1);
+				systemUpdate.EndMessage();
+
+				Network.SendDataFlag(ShipStatus.Instance.NetId, systemUpdate, player.OwnerId);
 			}
 		}
 
