@@ -22,6 +22,8 @@ namespace HydraMenu.ui.sections
 
 			Visuals.ShowGhosts.Enabled = GUILayout.Toggle(Visuals.ShowGhosts.Enabled, "Show Ghosts");
 			Chat.OnChat.ShowMessagesByGhosts = GUILayout.Toggle(Chat.OnChat.ShowMessagesByGhosts, "Show messages by ghosts");
+
+			Visuals.ShowPlayersInVent.Enabled = GUILayout.Toggle(Visuals.ShowPlayersInVent.Enabled, "Show Players Inside Vents");
 		}
 	}
 }

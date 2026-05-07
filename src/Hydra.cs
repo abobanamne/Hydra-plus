@@ -8,18 +8,22 @@ using HydraMenu.ui;
 
 namespace HydraMenu;
 
-[BepInPlugin("com.mrd.hydramenu", "Hydra", "1.3.2.0")]
+[BepInPlugin(PLUGIN_GUID, PLUGIN_NAME, PLUGIN_VERSION)]
 [BepInProcess("Among Us.exe")]
 public class Hydra : BasePlugin
 {
 	internal static new ManualLogSource Log;
 
-	public static RoutineManager routines;
+	internal const string PLUGIN_GUID = "com.mrd.hydramenu";
+	internal const string PLUGIN_NAME = "Hydra";
+	internal const string PLUGIN_VERSION = "0.1";
+
+    public static RoutineManager routines;
 	public static NotificationManager notifications;
 
 	public override void Load()
 	{
-		Harmony harmony = new Harmony(MyPluginInfo.PLUGIN_GUID);
+		Harmony harmony = new Harmony(PLUGIN_GUID);
 		harmony.PatchAll();
 
 		AddComponent<MainUI>();
@@ -29,7 +33,7 @@ public class Hydra : BasePlugin
 		routines = AddComponent<RoutineManager>();
 
 		Log = base.Log;
-		Log.LogInfo($"Plugin {MyPluginInfo.PLUGIN_GUID} has loaded!");
+		Log.LogInfo($"Plugin {PLUGIN_GUID} has loaded!");
 	}
 
 	[HarmonyPatch(typeof(MainMenuManager), nameof(MainMenuManager.Awake))]

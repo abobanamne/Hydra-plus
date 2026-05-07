@@ -17,12 +17,74 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AmongUs.GameLibs.Steam" Version="2025.11.18" />
-    <PackageReference Include="BepInEx.IL2CPP.MSBuild" Version="2.1.0-rc.1">
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-      <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
-    <PackageReference Include="BepInEx.Unity.IL2CPP" Version="6.0.0-be.735" />
-    <PackageReference Include="BepInEx.PluginInfoProps" Version="2.*" />
+    <Reference Include="0Harmony">
+      <HintPath>..\..\..\..\..\..\..\SteamLibrary\steamapps\common\Among Us\BepInEx\core\0Harmony.dll</HintPath>
+    </Reference>
+    <Reference Include="Assembly-CSharp">
+      <HintPath>..\..\..\..\..\..\..\SteamLibrary\steamapps\common\Among Us\BepInEx\interop\Assembly-CSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="BepInEx.Core">
+      <HintPath>..\..\..\..\..\..\..\SteamLibrary\steamapps\common\Among Us\BepInEx\core\BepInEx.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="BepInEx.Unity.IL2CPP">
+      <HintPath>..\..\..\..\..\..\..\SteamLibrary\steamapps\common\Among Us\BepInEx\core\BepInEx.Unity.IL2CPP.dll</HintPath>
+    </Reference>
+    <Reference Include="Hazel">
+      <HintPath>..\..\..\..\..\..\..\SteamLibrary\steamapps\common\Among Us\BepInEx\interop\Hazel.dll</HintPath>
+    </Reference>
+    <Reference Include="Il2CppInterop.Common">
+      <HintPath>..\..\..\..\..\..\..\SteamLibrary\steamapps\common\Among Us\BepInEx\core\Il2CppInterop.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Il2CppInterop.Runtime">
+      <HintPath>..\..\..\..\..\..\..\SteamLibrary\steamapps\common\Among Us\BepInEx\core\Il2CppInterop.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Il2Cppmscorlib">
+      <HintPath>..\..\..\..\..\..\..\SteamLibrary\steamapps\common\Among Us\BepInEx\interop\Il2Cppmscorlib.dll</HintPath>
+    </Reference>
+    <Reference Include="Il2CppSystem">
+      <HintPath>..\..\..\..\..\..\..\SteamLibrary\steamapps\common\Among Us\BepInEx\interop\Il2CppSystem.dll</HintPath>
+    </Reference>
+    <Reference Include="Il2CppSystem.Core">
+      <HintPath>..\..\..\..\..\..\..\SteamLibrary\steamapps\common\Among Us\BepInEx\interop\Il2CppSystem.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Sentry">
+      <HintPath>..\..\..\..\..\..\..\SteamLibrary\steamapps\common\Among Us\BepInEx\interop\Sentry.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Addressables">
+      <HintPath>..\..\..\..\..\..\..\SteamLibrary\steamapps\common\Among Us\BepInEx\interop\Unity.Addressables.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.ResourceManager">
+      <HintPath>..\..\..\..\..\..\..\SteamLibrary\steamapps\common\Among Us\BepInEx\interop\Unity.ResourceManager.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Services.Core">
+      <HintPath>..\..\..\..\..\..\..\SteamLibrary\steamapps\common\Among Us\BepInEx\interop\Unity.Services.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.TextMeshPro">
+      <HintPath>..\..\..\..\..\..\..\SteamLibrary\steamapps\common\Among Us\BepInEx\interop\Unity.TextMeshPro.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>..\..\..\..\..\..\..\SteamLibrary\steamapps\common\Among Us\BepInEx\interop\UnityEngine.CoreModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.ImageConversionModule">
+      <HintPath>..\..\..\..\..\..\..\SteamLibrary\steamapps\common\Among Us\BepInEx\interop\UnityEngine.ImageConversionModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.IMGUIModule">
+      <HintPath>..\..\..\..\..\..\..\SteamLibrary\steamapps\common\Among Us\BepInEx\interop\UnityEngine.IMGUIModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.InputLegacyModule">
+      <HintPath>..\..\..\..\..\..\..\SteamLibrary\steamapps\common\Among Us\BepInEx\interop\UnityEngine.InputLegacyModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.InputModule">
+      <HintPath>..\..\..\..\..\..\..\SteamLibrary\steamapps\common\Among Us\BepInEx\interop\UnityEngine.InputModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Physics2DModule">
+      <HintPath>..\..\..\..\..\..\..\SteamLibrary\steamapps\common\Among Us\BepInEx\interop\UnityEngine.Physics2DModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.TextRenderingModule">
+      <HintPath>..\..\..\..\..\..\..\SteamLibrary\steamapps\common\Among Us\BepInEx\interop\UnityEngine.TextRenderingModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>..\..\..\..\..\..\..\SteamLibrary\steamapps\common\Among Us\BepInEx\interop\UnityEngine.UI.dll</HintPath>
+    </Reference>
   </ItemGroup>
 </Project>
